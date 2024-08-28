@@ -9,6 +9,11 @@
 
 
 
+// For Neural Networks: Rows are
+// superscripts and columns are subscripts.
+// With a matrix using two subscripts,
+// the first subscript is the row and
+// the second index is the column.
 
 using System;
 
@@ -20,14 +25,21 @@ using System;
 
 public class FloatMatrix
 {
+private MainData mData;
 private FloatVec[] fArray;
+private int lastAppend = 0;
 
 
-internal FloatMatrix()
+
+internal FloatMatrix( MainData mainData )
 {
+mData = mainData;
+
 try
 {
-fArray = new FloatVec[2];
+fArray = new FloatVec[1];
+fArray[0] = new FloatVec( mData );
+
 }
 catch( Exception ) //  Except )
   {
@@ -40,10 +52,14 @@ catch( Exception ) //  Except )
 }
 
 
+
 void freeAll()
 {
-fArray = new FloatVec[2];
+fArray = new FloatVec[1];
+fArray[0] = new FloatVec( mData );
 }
+
+
 
 
 internal void setSize( int rows, int columns )
@@ -54,19 +70,22 @@ if( (rows == getRows()) &&
 
 if( rows < 1 )
   {
-  throw new Exception( 
+  throw new Exception(
           "FloatMatrix.setSize() rows." );
   }
 
 if( columns < 1 )
   {
-  throw new Exception( 
+  throw new Exception(
              "FloatMatrix.setSize() col." );
   }
 
 try
 {
 fArray = new FloatVec[rows];
+for( int count = 0; count < rows; count++ )
+  fArray[count] = new FloatVec( mData );
+
 }
 catch( Exception ) // Except )
   {
@@ -79,6 +98,48 @@ catch( Exception ) // Except )
 for( int count = 0; count < rows; count++ )
   fArray[count].setSize( columns );
 
+}
+
+
+
+
+internal void resizeRows( int newSize )
+{
+int oldSize = getRows();
+int columns = getColumns();
+
+if( newSize == oldSize )
+  return;
+
+if( newSize < 1 )
+  {
+  throw new Exception(
+          "FloatMatrix.resizeRows() rows." );
+  }
+
+try
+{
+Array.Resize( ref fArray, newSize );
+
+if( newSize > oldSize )
+  {
+  for( int count = oldSize; count < newSize;
+                                    count++ )
+    {
+    // An array of structs would get initialized,
+    // but not an array of objects.
+    fArray[count] = new FloatVec( mData );
+    fArray[count].setSize( columns );
+    }
+  }
+}
+catch( Exception ) // Except )
+  {
+  // freeAll();
+  throw new Exception(
+       "Not enough memory for FloatMatrix." );
+
+  }
 }
 
 
@@ -137,6 +198,42 @@ for( int row = 0; row < rows; row++ )
   }
 }
 
+
+
+internal void clearLastAppend()
+{
+lastAppend = 0;
+}
+
+
+internal int getLastAppend()
+{
+return lastAppend;
+}
+
+
+
+
+internal void appendFromString( string toSet )
+{
+if( toSet == null )
+  return;
+
+int col = getColumns();
+
+int max = toSet.Length;
+
+// Or clear it to zeros on the end of it.
+if( max < col )
+  return;
+
+int rows = getRows();
+if( (lastAppend + 1 ) >= rows )
+  resizeRows( rows + 1000 );
+
+fArray[lastAppend].setFromString( toSet );
+lastAppend++;
+}
 
 
 

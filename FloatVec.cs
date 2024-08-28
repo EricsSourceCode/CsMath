@@ -20,14 +20,23 @@ using System;
 
 public class FloatVec
 {
+private MainData mData;
 private float[] fArray;
 
 
-internal FloatVec()
+private FloatVec()
 {
+}
+
+
+
+internal FloatVec( MainData mainData )
+{
+mData = mainData;
+
 try
 {
-fArray = new float[2];
+fArray = new float[1];
 }
 catch( Exception ) //  Except )
   {
@@ -42,7 +51,7 @@ catch( Exception ) //  Except )
 
 void freeAll()
 {
-fArray = new float[2];
+fArray = new float[1];
 }
 
 
@@ -111,6 +120,24 @@ for( int count = 0; count < max; count++ )
 
 }
 
+
+
+internal void setFromString( string toSet )
+{
+if( toSet == null )
+  return;
+
+int max = toSet.Length;
+int maxSize = getSize();
+if( max > maxSize )
+  max = maxSize;
+
+for( int count = 0; count < max; count++ )
+  {
+  setVal( count, (float)toSet[count] );
+  // mData.showStatus( "Vec: " + getVal( count ));
+  }
+}
 
 
 
