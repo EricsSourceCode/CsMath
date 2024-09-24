@@ -216,7 +216,7 @@ internal void appendFromString( string toSet )
 if( toSet == null )
   {
   throw new Exception(
-      "VArray appendFromString() null string." );
+     "VectorArray appendFromString() null." );
   }
 
 // int col = getColumns();
@@ -231,21 +231,26 @@ lastAppend++;
 }
 
 
-
-
-internal void appendOneVal( float toSet )
+internal void appendVecCopy( VectorFlt toSet )
 {
-if( getColumns() < 2 )
+if( toSet == null )
   {
   throw new Exception(
-      "VectorArray appendOneVal() columns." );
+         "VectorArray appendVector() null." );
+  }
+
+int col = getColumns();
+if( toSet.getSize() != col )
+  {
+  throw new Exception(
+         "VectorArray appendVector() size." );
   }
 
 int rows = getRows();
 if( (lastAppend + 1 ) >= rows )
   resizeRows( rows + 1000 );
 
-fArray[lastAppend].setVal( 1, toSet );
+fArray[lastAppend].copy( toSet );
 lastAppend++;
 }
 

@@ -191,5 +191,29 @@ return sum;
 
 
 
+internal float normSquared()
+{
+int max = getSize();
+
+float sum = 0;
+for( int count = 0; count < max; count++ )
+  {
+  float oneVal = fArray[count];
+  sum += oneVal * oneVal;
+  }
+
+return sum;
+}
+
+
+
+internal float Norm()
+{
+float nSquared = normSquared();
+return (float)MathF.sqrt( nSquared );
+}
+
+
+
 
 } // Class

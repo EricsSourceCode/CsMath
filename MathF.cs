@@ -25,6 +25,11 @@ using System;
 public static class MathF
 {
 
+internal static double sqrt( double x )
+{
+return Math.Sqrt( x );
+}
+
 
 internal static double log( double x )
 {
@@ -58,6 +63,22 @@ catch( Exception )
   }
 
 return result;
+}
+
+
+internal static bool almostEqual(
+                         double a, double b )
+{
+// How small can this be?
+double smallNumber = 0.000000000001;
+
+if( a + smallNumber < b )
+  return false;
+
+if( a - smallNumber > b )
+  return false;
+
+return true;
 }
 
 

@@ -12,7 +12,7 @@
 
 
 // There is a good book about the history
-// of vectors and quaternions called 
+// of vectors and quaternions called
 // A History of Vector Analysis, by Michael
 // Crowe.  It describes how modern vector
 // analysis evolved, and how Hamilton's
