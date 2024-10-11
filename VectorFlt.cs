@@ -64,11 +64,11 @@ if( howBig < 1 )
               "VectorFlt.setSize() < 1" );
   }
 
-try
-{
 if( howBig == fArray.Length )
   return;
 
+try
+{
 fArray = new float[howBig];
 }
 catch( Exception ) // Except )
@@ -169,6 +169,20 @@ catch( Exception ) // Except )
 
 
 
+internal void add( VectorFlt toAdd )
+{
+int max = toAdd.getSize();
+
+if( getSize() != max )
+  throw new Exception( "VectorFlt add()" );
+
+for( int count = 0; count < max; count++ )
+  fArray[count] += toAdd.fArray[count];
+
+}
+
+
+
 internal float dotProd( VectorFlt y )
 {
 int max = y.getSize();
@@ -180,11 +194,8 @@ if( getSize() != max )
   }
 
 float sum = 0;
-
 for( int count = 0; count < max; count++ )
-  {
   sum += fArray[count] * y.fArray[count];
-  }
 
 return sum;
 }
@@ -207,10 +218,29 @@ return sum;
 
 
 
-internal float Norm()
+internal float norm()
 {
 float nSquared = normSquared();
 return (float)MathF.sqrt( nSquared );
+}
+
+
+
+internal void hadamard( VectorFlt x,
+                        VectorFlt y )
+{
+int max = x.getSize(); 
+if( max != y.getSize())
+  throw new Exception( "VectorFlt hadamard()" );
+
+// If it needs to change size.
+setSize( max );
+
+for( int count = 0; count < max; count++ )
+  {
+  fArray[count] = x.fArray[count] *
+                  y.fArray[count];
+  }
 }
 
 
