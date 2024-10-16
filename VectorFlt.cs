@@ -229,7 +229,7 @@ return (float)MathF.sqrt( nSquared );
 internal void hadamard( VectorFlt x,
                         VectorFlt y )
 {
-int max = x.getSize(); 
+int max = x.getSize();
 if( max != y.getSize())
   throw new Exception( "VectorFlt hadamard()" );
 
@@ -243,6 +243,25 @@ for( int count = 0; count < max; count++ )
   }
 }
 
+
+
+internal void subtract( VectorFlt x,
+                        VectorFlt y )
+{
+// x - y
+int max = x.getSize();
+if( max != y.getSize())
+  throw new Exception( "VectorFlt subtract()" );
+
+// If it needs to change size.
+setSize( max );
+
+for( int count = 0; count < max; count++ )
+  {
+  fArray[count] = x.fArray[count] -
+                  y.fArray[count];
+  }
+}
 
 
 

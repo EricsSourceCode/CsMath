@@ -256,4 +256,16 @@ lastAppend++;
 
 
 
+internal void copyVecAt( VectorFlt toGet,
+                         int where )
+{
+RangeT.test( where, 0, lastAppend - 1,
+            "VectorArray.copyVecAt() range." );
+
+toGet.copy( fArray[where] );
+}
+
+
+
+
 } // Class

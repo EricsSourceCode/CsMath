@@ -1,5 +1,9 @@
 /*
 
+Not used yet.
+For Matrix operations.
+See VectorFlt.cs and VectorArray.cs also.
+
 
 // Copyright Eric Chauvin 2024.
 
