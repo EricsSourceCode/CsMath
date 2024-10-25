@@ -129,13 +129,17 @@ clearZeros();
 if( toSet == null )
   return;
 
-int max = toSet.Length;
+byte[] bArray = UTF8Str.stringToBytes( toSet );
+ByteBuf byteBuf = new ByteBuf();
+byteBuf.setFromByteArray( bArray );
+ 
+int max = byteBuf.getLast();
 int maxSize = getSize();
 if( max > maxSize )
   max = maxSize;
 
 for( int count = 0; count < max; count++ )
-  setVal( count, (float)toSet[count] );
+  setVal( count, (float)byteBuf.getU8( count ));
 
 }
 
@@ -262,6 +266,16 @@ for( int count = 0; count < max; count++ )
                   y.fArray[count];
   }
 }
+
+
+/*
+sigma()
+To apply the sigma function to every element
+of a vector, with the answer in another vector
+would be... VectorFlt.sigma( result )
+so it goes in to the result vector.
+To avoid range checking each element.
+*/
 
 
 
