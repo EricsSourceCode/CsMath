@@ -132,7 +132,7 @@ if( toSet == null )
 byte[] bArray = UTF8Str.stringToBytes( toSet );
 ByteBuf byteBuf = new ByteBuf();
 byteBuf.setFromByteArray( bArray );
- 
+
 int max = byteBuf.getLast();
 int maxSize = getSize();
 if( max > maxSize )
