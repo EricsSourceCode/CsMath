@@ -124,7 +124,7 @@ for( int count = 0; count < max; count++ )
 
 internal void setFromString( string toSet )
 {
-clearZeros();
+clearTo( 0 );
 
 if( toSet == null )
   return;
@@ -146,12 +146,12 @@ for( int count = 0; count < max; count++ )
 
 
 
-internal void clearZeros()
+internal void clearTo( float setTo )
 {
 int max = getSize();
 
 for( int count = 0; count < max; count++ )
-  fArray[count] = 0;
+  fArray[count] = setTo;
 
 }
 
@@ -266,16 +266,6 @@ for( int count = 0; count < max; count++ )
                   y.fArray[count];
   }
 }
-
-
-/*
-sigma()
-To apply the sigma function to every element
-of a vector, with the answer in another vector
-would be... VectorFlt.sigma( result )
-so it goes in to the result vector.
-To avoid range checking each element.
-*/
 
 
 
