@@ -121,6 +121,27 @@ for( int count = 0; count < max; count++ )
 }
 
 
+internal void copyUpTo( VectorFlt toCopy,
+                        int max )
+{
+int toCopySize = getSize();
+int testSize = getSize();
+
+if( testSize > toCopySize )
+  testSize = toCopySize;
+
+if( max > testSize )
+  max = testSize;
+
+if( max > toCopySize )
+  max = toCopySize;
+
+for( int count = 0; count < max; count++ )
+  fArray[count] = toCopy.fArray[count];
+
+}
+
+
 
 internal void setFromString( string toSet )
 {
