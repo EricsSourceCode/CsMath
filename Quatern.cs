@@ -23,7 +23,7 @@ using System;
 
 
 
-// namespace 
+// namespace
 
 
 static class Quatern
@@ -458,5 +458,3 @@ ab  and ac are cross products.
 
 
 } // Class
-
-
