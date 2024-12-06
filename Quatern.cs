@@ -26,6 +26,7 @@ using System;
 // namespace
 
 
+
 static class Quatern
 {
 // a + bi + cj + dk
@@ -54,197 +55,215 @@ return result;
 
 
 
-/*
-  internal static QuaternionRec SetZero()
-    {
-    QuaternionRec Result;
-    Result.X = 0;
-    Result.Y = 0;
-    Result.Z = 0;
-    Result.W = 0;
-    return Result;
-    }
+internal static QuaternRec setZero()
+{
+QuaternRec result;
+result.X = 0;
+result.Y = 0;
+result.Z = 0;
+result.W = 0;
+return result;
+}
 
 
 
-  internal static QuaternionRec Negate( QuaternionRec Result )
-    {
-    Result.X = -Result.X;
-    Result.Y = -Result.Y;
-    Result.Z = -Result.Z;
-    Result.W = -Result.W;
-    return Result;
-    }
-
-
-
-
-  internal static QuaternionRec Add( QuaternionRec Result, QuaternionRec In )
-    {
-    Result.X += In.X;
-    Result.Y += In.Y;
-    Result.Z += In.Z;
-    Result.W += In.W;
-    return Result;
-    }
-
-
-
-  internal static double NormSquared( QuaternionRec In )
-    {
-    double NS = (In.X * In.X) +
-                (In.Y * In.Y) +
-                (In.Z * In.Z) +
-                (In.W * In.W);
-
-    return NS;
-    }
-
-
-
-  internal static double Norm( QuaternionRec In )
-    {
-    double NSquared = NormSquared( In );
-    return Math.Sqrt( NSquared );
-    }
-
-
-
-  internal static QuaternionRec Normalize( QuaternionRec In )
-    {
-    double Length = Norm( In );
-    if( Length < 0.000000000000000001d )
-      return SetZero();
-      // throw( new Exception( "Length is too small in QuaternionEC.Normalize()." ));
-
-    double Inverse = 1.0d / Length;
-
-    QuaternionRec Result;
-    Result.X = In.X * Inverse;
-    Result.Y = In.Y * Inverse;
-    Result.Z = In.Z * Inverse;
-    Result.W = In.W * Inverse;
-    return Result;
-    }
-
-
-
-  internal static bool DoubleIsAlmostEqual( double A, double B, double SmallNumber )
-    {
-    // How small can this be?
-
-    if( A + SmallNumber < B )
-      return false;
-
-    if( A - SmallNumber > B )
-      return false;
-
-    return true;
-    }
-
-
-
-  internal static bool IsAlmostEqual( QuaternionRec Left, QuaternionRec Right, double SmallNumber )
-    {
-    if( !DoubleIsAlmostEqual( Left.X, Right.X, SmallNumber ))
-      return false;
-
-    if( !DoubleIsAlmostEqual( Left.Y, Right.Y, SmallNumber ))
-      return false;
-
-    if( !DoubleIsAlmostEqual( Left.Z, Right.Z, SmallNumber ))
-      return false;
-
-    if( !DoubleIsAlmostEqual( Left.W, Right.W, SmallNumber ))
-      return false;
-
-    return true;
-    }
-
-
-
-  internal static QuaternionRec Conjugate( QuaternionRec In )
-    {
-    QuaternionRec Result;
-    Result.X = -In.X;
-    Result.Y = -In.Y;
-    Result.Z = -In.Z;
-    Result.W = In.W;
-    return Result;
-    }
-
-
-
-  internal static QuaternionRec Inverse( QuaternionRec In )
-    {
-    // QX = 1, so X is the multiplicative inverse
-    // of Q.  So X = 1 / Q, or Q^(-1).
-
-    double NSquared = NormSquared( In );
-    if( NSquared < 0.0000000000001 )
-      return SetZero();
-      // throw( new Exception( "NSquared is too small in QuaternionEC.Inverse()." ));
-
-    double InverseNS = 1.0d / NSquared;
-
-    // The negative parts are to make it the
-    // conjugate.  So the Result is the conjugate
-    // divided by the norm squared.
-    QuaternionRec Result;
-    Result.X = -In.X * InverseNS;
-    Result.Y = -In.Y * InverseNS;
-    Result.Z = -In.Z * InverseNS;
-    Result.W = In.W * InverseNS;
-    return Result;
-    }
-
-
-////////////////
-Partial Differential equations were around for about a couple
-of centuries before quaternions.
-The original meaining of the phrase Cross Product is with
-differentials like dxdy as opposed to dx squared.  And it
-has to do with the Metric ds squared.
-(a + b + c)(a + b + c)
-aa + ab + ac + and so on...
-aa is not a cross product.
-ab  and ac are cross products.
-///////////////
-
-  internal static QuaternionRec CrossProduct(
-                                 QuaternionRec Left,
-                                 QuaternionRec Right )
-    {
-    // These are cross products:
-    // i x j = k
-    // j x k = i
-    // k x i = j
-
-    QuaternionRec Result;
-    // W is not used.
-    Result.W = 0;
-
-    Result.X = (Left.Y * Right.Z) -
-               (Left.Z * Right.Y);
-
-    Result.Y = (Left.Z * Right.X) -
-               (Left.X * Right.Z);
-
-    Result.Z = (Left.X * Right.Y) -
-               (Left.Y * Right.X);
-
-    return Result;
-    }
+internal static QuaternRec negate(
+                           QuaternRec result )
+{
+result.X = -result.X;
+result.Y = -result.Y;
+result.Z = -result.Z;
+result.W = -result.W;
+return result;
+}
 
 
 
 
-  ///////////////////////////
-  // Notes on Multiplication:
+internal static QuaternRec add(
+          QuaternRec result, QuaternRec inQ )
+{
+result.X += inQ.X;
+result.Y += inQ.Y;
+result.Z += inQ.Z;
+result.W += inQ.W;
+return result;
+}
 
-  // It is a right-handed coordinate system.  Positive
-  // Z values go toward the viewer.  X goes to the
-  // right, Y goes up.
+
+
+internal static double normSquared(
+                           QuaternRec inQ )
+{
+double ns = (inQ.X * inQ.X) +
+            (inQ.Y * inQ.Y) +
+            (inQ.Z * inQ.Z) +
+            (inQ.W * inQ.W);
+
+return ns;
+}
+
+
+
+internal static double norm( QuaternRec inQ )
+{
+double nSquared = normSquared( inQ );
+return Math.Sqrt( nSquared );
+}
+
+
+
+internal static QuaternRec normalize(
+                            QuaternRec inQ )
+{
+double length = norm( In );
+if( length < 0.0000000000000001d )
+  return setZero();
+
+double inverse = 1.0d / length;
+
+QuaternRec result;
+result.X = inQ.X * inverse;
+result.Y = inQ.Y * inverse;
+result.Z = inQ.Z * inverse;
+result.W = inQ.W * inverse;
+return result;
+}
+
+
+
+internal static bool doubleIsAlmostEqual(
+                       double a, double b, 
+                       double smallNumber )
+{
+// How small can this be?
+
+if( a + smallNumber < b )
+  return false;
+
+if( a - smallNumber > b )
+  return false;
+
+return true;
+}
+
+
+
+internal static bool isAlmostEqual(
+           QuaternRec left, QuaternRec right,
+           double smallNumber )
+{
+if( !doubleIsAlmostEqual( left.X, right.X, 
+                                  smallNumber ))
+  return false;
+
+if( !doubleIsAlmostEqual( left.Y, right.Y,
+                               smallNumber ))
+  return false;
+
+if( !doubleIsAlmostEqual( left.Z, right.Z,
+                               smallNumber ))
+  return false;
+
+if( !doubleIsAlmostEqual( left.W, right.W,
+                                 smallNumber ))
+  return false;
+
+return true;
+}
+
+
+
+internal static QuaternRec conjugate(
+                              QuaternRec inQ )
+{
+QuaternRec result;
+result.X = -inQ.X;
+result.Y = -inQ.Y;
+result.Z = -inQ.Z;
+result.W = inQ.W;
+return result;
+}
+
+
+
+internal static QuaternRec inverse(
+                             QuaternRec inQ )
+{
+// QX = 1, so X is the multiplicative inverse
+// of Q.  So X = 1 / Q, or Q^(-1).
+
+double nSquared = normSquared( inQ );
+if( nSquared < 0.0000000000001 )
+  return setZero();
+
+double inverseNS = 1.0d / nSquared;
+
+// The negative parts are to make it the
+// conjugate.  So the result is the conjugate
+// divided by the norm squared.
+
+QuaternRec result;
+result.X = -inQ.X * inverseNS;
+result.Y = -inQ.Y * inverseNS;
+result.Z = -inQ.Z * inverseNS;
+result.W = inQ.W * inverseNS;
+return result;
+}
+
+
+
+
+// Partial Differential equations were
+// around for about a couple of centuries
+// before quaternions.
+// The original meaining of the phrase
+// Cross Product is with differentials
+// like dxdy as opposed to dx squared.
+// And it has to do with the Metric
+// ds squared.
+// (a + b + c)(a + b + c)
+// aa + ab + ac + and so on...
+// aa is not a cross product.
+// ab  and ac are cross products.
+
+
+
+internal static QuaternRec crossProduct(
+                          QuaternRec Left,
+                          QuaternRec Right )
+{
+// These are cross products:
+// i x j = k
+// j x k = i
+// k x i = j
+
+QuaternRec result;
+
+// W is not used.
+result.W = 0;
+
+result.X = (left.Y * right.Z) -
+           (left.Z * right.Y);
+
+result.Y = (left.Z * right.X) -
+           (left.X * right.Z);
+
+result.Z = (left.X * right.Y) -
+           (left.Y * right.X);
+
+return result;
+}
+
+
+
+
+///////////////////////////
+// Notes on Multiplication:
+
+// It is a right-handed coordinate system.
+// Positive Z values go toward the viewer.
+// X goes to the right, Y goes up.
 
   // ij = k    ji = -k
   // jk = i    kj = -i
@@ -312,149 +331,179 @@ ab  and ac are cross products.
 
 
 
-  internal static QuaternionRec Multiply(
-                                     QuaternionRec L,
-                                     QuaternionRec R )
-    {
-    // Result.X = a1w2 + w1a2 + b1c2 + -c1b2;
-    // Result.Y = -a1c2 + b1w2 + c1a2 + w1b2;
-    // Result.Z = a1b2 + -b1a2 + c1w2 + w1c2;
-    // Result.W = -a1a2 + -b1b2 + -c1c2 + w1w2;
+internal static QuaternRec multiply(
+                            QuaternRec L,
+                            QuaternRec R )
+{
+// Result.X = a1w2 + w1a2 + b1c2 + -c1b2;
+// Result.Y = -a1c2 + b1w2 + c1a2 + w1b2;
+// Result.Z = a1b2 + -b1a2 + c1w2 + w1c2;
+// Result.W = -a1a2 + -b1b2 + -c1c2 + w1w2;
 
-    QuaternionRec Result;
+QuaternRec result;
 
-    // The vector Cross Product part:
-    Result.X =  (L.X * R.W) +  (L.W * R.X) +  (L.Y * R.Z) + (-L.Z * R.Y);
-    Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +  (L.Z * R.X) +  (L.W * R.Y);
-    Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +  (L.Z * R.W) +  (L.W * R.Z);
+// The vector Cross Product part:
+result.X =  (L.X * R.W) +  (L.W * R.X) +
+                  (L.Y * R.Z) + (-L.Z * R.Y);
+result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
+                  (L.Z * R.X) +  (L.W * R.Y);
+result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
+                  (L.Z * R.W) +  (L.W * R.Z);
 
-    // Almost the same as the vector Dot Product.
-    Result.W = (-L.X * R.X) + (-L.Y * R.Y) + (-L.Z * R.Z) +  (L.W * R.W);
-    return Result;
-    }
-
-
-
-  internal static QuaternionRec MultiplyWithLeftVector3(
-                                 Vector3.Vector L,
-                                 QuaternionRec R )
-    {
-    QuaternionRec Result;
-
-    // Result.X =  (L.X * R.W) +  (0 * R.X) +  (L.Y * R.Z) + (-L.Z * R.Y);
-    // Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +  (L.Z * R.X) +  (0 * R.Y);
-    // Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +  (L.Z * R.W) +  (0 * R.Z);
-    // Result.W = (-L.X * R.X) + (-L.Y * R.Y) + (-L.Z * R.Z) +  (0 * R.W);
-
-    Result.X =  (L.X * R.W) +  (L.Y * R.Z) + (-L.Z * R.Y);
-    Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +  (L.Z * R.X);
-    Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +  (L.Z * R.W);
-    Result.W = (-L.X * R.X) + (-L.Y * R.Y) + (-L.Z * R.Z);
-    return Result;
-    }
+// Almost the same as the vector Dot Product.
+result.W = (-L.X * R.X) + (-L.Y * R.Y) +
+                 (-L.Z * R.Z) +  (L.W * R.W);
+return result;
+}
 
 
 
-  internal static Vector3.Vector MultiplyWithResultVector3(
-                                  QuaternionRec L,
-                                  QuaternionRec R )
-    {
-    Vector3.Vector Result;
-    Result.X =  (L.X * R.W) +  (L.W * R.X) +  (L.Y * R.Z) + (-L.Z * R.Y);
-    Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +  (L.Z * R.X) +  (L.W * R.Y);
-    Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +  (L.Z * R.W) +  (L.W * R.Z);
+internal static QuaternRec 
+                    multiplyWithLeftVector3(
+                            Vector3.Vect L,
+                            QuaternRec R )
+{
+QuaternRec result;
 
-    // It doesn't need this calculation:
-    // Result.W = (-L.X * R.X) + (-L.Y * R.Y) + (-L.Z * R.Z) +  (L.W * R.W);
+// Result.X =  (L.X * R.W) +  (0 * R.X) +
+//                (L.Y * R.Z) + (-L.Z * R.Y);
+// Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
+//                (L.Z * R.X) +  (0 * R.Y);
+// Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
+//                (L.Z * R.W) +  (0 * R.Z);
+// Result.W = (-L.X * R.X) + (-L.Y * R.Y) +
+//                (-L.Z * R.Z) +  (0 * R.W);
 
-    return Result;
-    }
-
-
-
-  internal static QuaternionRec SetAsRotation(
-                                 QuaternionRec Axis,
-                                 double Angle )
-    {
-    // Make sure it's a unit quaternion.
-    Axis.W = 0;
-    Axis = Normalize( Axis );
-
-    // If Angle was Pi / 2 then this would be
-    // Pi / 4.
-    double HalfAngle = Angle * 0.5d;
-    double SineHalfAngle = Math.Sin( HalfAngle );
-    double CosineHalfAngle = Math.Cos( HalfAngle );
-
-    QuaternionRec Result;
-    Result.X = Axis.X * SineHalfAngle;
-    Result.Y = Axis.Y * SineHalfAngle;
-    Result.Z = Axis.Z * SineHalfAngle;
-    Result.W = CosineHalfAngle;
-    return Result;
-    }
+result.X =  (L.X * R.W) +  (L.Y * R.Z) +
+                             (-L.Z * R.Y);
+result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
+                             (L.Z * R.X);
+result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
+                             (L.Z * R.W);
+result.W = (-L.X * R.X) + (-L.Y * R.Y) +
+                             (-L.Z * R.Z);
+return result;
+}
 
 
 
-  internal static QuaternionRec Rotate(
-                       QuaternionRec RotationQ,
-                       QuaternionRec InverseRotationQ,
-                       QuaternionRec StartPoint )
-    {
-    QuaternionRec MiddlePoint = Multiply( StartPoint, InverseRotationQ );
-    QuaternionRec Result = Multiply( RotationQ, MiddlePoint );
-    return Result;
-    }
+internal static Vector3.Vect 
+                    multiplyWithResultVector3(
+                       QuaternRec L,
+                       QuaternRec R )
+{
+Vector3.Vect result;
+result.X =  (L.X * R.W) +  (L.W * R.X) +
+                  (L.Y * R.Z) + (-L.Z * R.Y);
+result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
+                  (L.Z * R.X) +  (L.W * R.Y);
+result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
+                  (L.Z * R.W) +  (L.W * R.Z);
+
+// It doesn't need this calculation:
+// result.W = (-L.X * R.X) + (-L.Y * R.Y) +
+//               (-L.Z * R.Z) +  (L.W * R.W);
+
+return result;
+}
 
 
 
-  internal static Vector3.Vector RotateVector3(
-                     QuaternionRec RotationQ,
-                     QuaternionRec InverseRotationQ,
-                     Vector3.Vector StartPoint )
-    {
-    // A quaternion rotation is clockwise around a vector
-    // if you are looking down the vector from the origin point.
-    // Like an archer with an arrow in the bow, you are sighting
-    // down the arrow.
-    // Compare this with representing a rotation or a moment
-    // of inertia, or a torque, by using a vector cross product
-    // in a right-handed coordinate system.  It goes in the
-    // right direction like it should.  If the Z axis is pointing
-    // straight toward you then it is the opposite
-    // point of view from what an archer would see when he
-    // is sighting down an arrow in his bow.  That opposite
-    // point of view is a counter-clockwise rotation.
+internal static QuaternRec setAsRotation(
+                          QuaternRec axis,
+                          double angle )
+{
+// Make sure it's a unit quaternion.
+axis.W = 0;
+axis = normalize( axis );
 
+// If Angle was Pi / 2 then this would be
+// Pi / 4.
+double halfAngle = angle * 0.5d;
+double sineHalfAngle = Math.Sin( halfAngle );
+double cosineHalfAngle = Math.Cos( halfAngle );
 
-    QuaternionRec MiddlePoint = MultiplyWithLeftVector3(
-                       StartPoint, InverseRotationQ );
-    Vector3.Vector Result = MultiplyWithResultVector3(
-                              RotationQ, MiddlePoint );
-    return Result;
-    }
+QuaternRec result;
+result.X = axis.X * sineHalfAngle;
+result.Y = axis.Y * sineHalfAngle;
+result.Z = axis.Z * sineHalfAngle;
+result.W = cosineHalfAngle;
+return result;
+}
 
 
 
+internal static QuaternRec rotate(
+                   QuaternRec rotationQ,
+                   QuaternRec inverseRotationQ,
+                   QuaternRec startPoint )
+{
+QuaternRec middlePoint = multiply( 
+               startPoint, inverseRotationQ );
+QuaternRec result = multiply( rotationQ,
+                              middlePoint );
+return result;
+}
 
-  internal static Vector3.Vector RotationWithSetupDegrees(
-                                  double AngleDegrees,
-                                  QuaternionRec Axis,
-                                  Vector3.Vector InVector )
-    {
-    double Angle = NumbersEC.DegreesToRadians( AngleDegrees );
 
-    QuaternionRec RotationQ = SetAsRotation( Axis, Angle );
-    QuaternionRec InverseRotationQ = Inverse( RotationQ );
 
-    Vector3.Vector ResultPoint = RotateVector3(
-                     RotationQ,
-                     InverseRotationQ,
-                     InVector );
+internal static Vector3.Vect rotateVector3(
+                 QuaternRec rotationQ,
+                 QuaternRec inverseRotationQ,
+                 Vector3.Vect startPoint )
+{
+// A quaternion rotation is clockwise
+// around a vector if you are looking down
+// the vector from the origin point.
+// Like an archer with an arrow in the
+// bow, you are sighting down the arrow.
+// Compare this with representing a
+// rotation or a moment of inertia, or
+// a torque, by using a vector cross product
+// in a right-handed coordinate system.
+// It goes in the right direction like it
+// should.  If the Z axis is pointing
+// straight toward you then it is the opposite
+// point of view from what an archer
+// would see when he is sighting down an
+// arrow in his bow.  That opposite point
+// of view is a counter-clockwise rotation.
 
-    return ResultPoint;
-    }
-*/
+QuaternRec middlePoint = 
+                 multiplyWithLeftVector3(
+                      startPoint, 
+                      inverseRotationQ );
+Vector3.Vect result = 
+             multiplyWithResultVector3(
+                      rotationQ, middlePoint );
+return result;
+}
+
+
+
+
+internal static Vector3.Vect 
+                rotationWithSetupDegrees(
+                      double angleDegrees,
+                      QuaternRec axis,
+                      Vector3.Vect inVector )
+{
+double angle = MathF.degreesToRadians( 
+                             angleDegrees );
+
+QuaternRec rotationQ = setAsRotation( 
+                              axis, angle );
+QuaternRec inverseRotationQ = 
+                       inverse( rotationQ );
+
+Vector3.Vect resultPoint = rotateVector3(
+                     rotationQ,
+                     inverseRotationQ,
+                     inVector );
+
+return resultPoint;
+}
+
 
 
 } // Class

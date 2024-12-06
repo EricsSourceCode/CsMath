@@ -13,6 +13,7 @@
 // See the Quatern.cs file for notes.
 
 
+
 using System;
 
 
@@ -23,7 +24,7 @@ static class Vector3
 {
 
 
-public struct Vector
+public struct Vect
 {
 public double X;
 public double Y;
@@ -32,9 +33,9 @@ public double Z;
 
 
 
-internal static Vector makeZero()
+internal static Vect makeZero()
 {
-Vector result;
+Vect result;
 result.X = 0;
 result.Y = 0;
 result.Z = 0;
@@ -43,154 +44,164 @@ return result;
 }
 
 
-/*
-  internal static Vector Negate( Vector In )
-    {
-    In.X = -In.X;
-    In.Y = -In.Y;
-    In.Z = -In.Z;
+internal static Vect negate( Vect inV )
+{
+inV.X = -inV.X;
+inV.Y = -inV.Y;
+inV.Z = -inV.Z;
 
-    return In;
-    }
-
-
-
-  internal static Vector Add( Vector Left, Vector Right )
-    {
-    Vector Result;
-    Result.X = Left.X + Right.X;
-    Result.Y = Left.Y + Right.Y;
-    Result.Z = Left.Z + Right.Z;
-    return Result;
-    }
+return inV;
+}
 
 
 
-  internal static Vector Subtract( Vector Left, Vector Right )
-    {
-    Vector Result;
-    Result.X = Left.X - Right.X;
-    Result.Y = Left.Y - Right.Y;
-    Result.Z = Left.Z - Right.Z;
-    return Result;
-    }
+internal static Vect add( Vect left,
+                          Vect right )
+{
+Vect result;
+result.X = left.X + right.X;
+result.Y = left.Y + right.Y;
+result.Z = left.Z + right.Z;
+return result;
+}
 
 
 
-  internal static double NormSquared( Vector In )
-    {
-    double NS = (In.X * In.X) +
-                (In.Y * In.Y) +
-                (In.Z * In.Z);
+internal static Vect subtract( Vect left,
+                               Vect right )
+{
+Vect result;
 
-    return NS;
-    }
-
-
-
-  internal static double Norm( Vector In )
-    {
-    double NSquared = NormSquared( In );
-    return Math.Sqrt( NSquared );
-    }
+result.X = left.X - right.X;
+result.Y = left.Y - right.Y;
+result.Z = left.Z - right.Z;
+return result;
+}
 
 
 
-  internal static Vector Normalize( Vector In )
-    {
-    double Length = (In.X * In.X) +
-                    (In.Y * In.Y) +
-                    (In.Z * In.Z);
+internal static double normSquared( Vect inV )
+{
+double ns = (inV.X * inV.X) +
+            (inV.Y * inV.Y) +
+            (inV.Z * inV.Z);
 
-    Length = Math.Sqrt( Length );
-
-    const double SmallNumber = 0.00000000000000000001d;
-    if( Length < SmallNumber )
-      return MakeZero();
-
-    double Inverse = 1.0d / Length;
-
-    Vector Result;
-    Result.X = In.X * Inverse;
-    Result.Y = In.Y * Inverse;
-    Result.Z = In.Z * Inverse;
-    return Result;
-    }
+return ns;
+}
 
 
 
-  internal static Vector MultiplyWithScalar( Vector In, double Scalar )
-    {
-    Vector Result;
-    Result.X = In.X * Scalar;
-    Result.Y = In.Y * Scalar;
-    Result.Z = In.Z * Scalar;
-    return Result;
-    }
+internal static double norm( Vect inV )
+{
+double nSquared = normSquared( inV );
+return Math.Sqrt( nSquared );
+}
 
 
 
-  internal static double DotProduct( Vector Left, Vector Right )
-    {
-    double Dot = (Left.X * Right.X) +
-                 (Left.Y * Right.Y) +
-                 (Left.Z * Right.Z);
+internal static Vect normalize( Vect inV )
+{
+double length = (inV.X * inV.X) +
+                (inV.Y * inV.Y) +
+                (inV.Z * inV.Z);
 
-    return Dot;
-    }
+length = Math.Sqrt( length );
 
+const double smallNumber =
+                      0.000000000000000001d;
+if( length < smallNumber )
+  return makeZero();
 
+double inverse = 1.0d / length;
 
-  internal static Vector MakePerpendicular( Vector A, Vector B )
-    {
-    // A and B are assumed to be already normalized.
-    // Make a vector that is perpendicular to A,
-    // pointing toward B.
-
-    double Dot = DotProduct( A, B );
-    Vector CosineLengthVec = A;
-    CosineLengthVec = MultiplyWithScalar( CosineLengthVec, Dot );
-
-    // CosineLengthVec now points in the same
-    // direction as A, but it's shorter.
-
-    // CosineLengthVec + Result = B
-    // Result = B - CosineLengthVec
-    Vector Result = B;
-    Result = Subtract( Result, CosineLengthVec );
-    Result = Normalize( Result );
-
-    // They should be orthogonal to each other.
-    // double TestDot = DotProduct( A, Result );
-    // if( Math.Abs( TestDot ) > 0.00000001 )
-      // throw( new Exception( "TestDot should be zero." ));
-
-    return Result;
-    }
+Vect result;
+result.X = inV.X * inverse;
+result.Y = inV.Y * inverse;
+result.Z = inV.Z * inverse;
+return result;
+}
 
 
 
-  internal static Vector CrossProduct( Vector Left,
-                                       Vector Right )
-    {
-    // i x j = k
-    // j x k = i
-    // k x i = j
+internal static Vect multiplyWithScalar(
+                  Vector inV, double scalar )
+{
+Vect result;
+result.X = inV.X * scalar;
+result.Y = inV.Y * scalar;
+result.Z = inV.Z * scalar;
+return result;
+}
 
-    Vector Result;
 
-    Result.X = (Left.Y * Right.Z) -
-               (Left.Z * Right.Y);
 
-    Result.Y = (Left.Z * Right.X) -
-               (Left.X * Right.Z);
+internal static double dotProduct(
+                      Vect left, Vect right )
+{
+double dot = (left.X * right.X) +
+             (left.Y * right.Y) +
+             (left.Z * right.Z);
 
-    Result.Z = (Left.X * Right.Y) -
-               (Left.Y * Right.X);
+return dot;
+}
 
-    return Result;
-    }
-*/
+
+
+internal static Vect makePerpendicular(
+                            Vect A, Vect B )
+{
+// A and B are assumed to be already normalized.
+// Make a vector that is perpendicular to A,
+// pointing toward B.
+
+double dot = dotProduct( A, B );
+Vect cosineLengthVec = A;
+cosineLengthVec = multiplyWithScalar(
+                     cosineLengthVec, dot );
+
+// CosineLengthVec now points in the same
+// direction as A, but it's shorter.
+
+// cosineLengthVec + result = B
+// result = B - cosineLengthVec
+
+Vect result = B;
+result = subtract( result, cosineLengthVec );
+result = normalize( result );
+
+// They should be orthogonal to each other.
+// double TestDot = DotProduct( A, Result );
+// if( Math.Abs( TestDot ) > 0.00000001 )
+   // throw( new Exception(
+   //         "TestDot should be zero." ));
+
+return result;
+}
+
+
+
+internal static Vect crossProduct(
+                              Vect left,
+                              Vect right )
+{
+// i x j = k
+// j x k = i
+// k x i = j
+
+Vect result;
+
+result.X = (left.Y * right.Z) -
+           (left.Z * right.Y);
+
+result.Y = (left.Z * right.X) -
+           (left.X * right.Z);
+
+result.Z = (left.X * right.Y) -
+           (left.Y * right.X);
+
+return result;
+}
+
 
 
 } // Class
