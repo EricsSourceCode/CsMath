@@ -116,7 +116,7 @@ return Math.Sqrt( nSquared );
 internal static QuaternRec normalize(
                             QuaternRec inQ )
 {
-double length = norm( In );
+double length = norm( inQ );
 if( length < 0.0000000000000001d )
   return setZero();
 
@@ -133,7 +133,7 @@ return result;
 
 
 internal static bool doubleIsAlmostEqual(
-                       double a, double b, 
+                       double a, double b,
                        double smallNumber )
 {
 // How small can this be?
@@ -153,7 +153,7 @@ internal static bool isAlmostEqual(
            QuaternRec left, QuaternRec right,
            double smallNumber )
 {
-if( !doubleIsAlmostEqual( left.X, right.X, 
+if( !doubleIsAlmostEqual( left.X, right.X,
                                   smallNumber ))
   return false;
 
@@ -230,8 +230,8 @@ return result;
 
 
 internal static QuaternRec crossProduct(
-                          QuaternRec Left,
-                          QuaternRec Right )
+                          QuaternRec left,
+                          QuaternRec right )
 {
 // These are cross products:
 // i x j = k
@@ -358,7 +358,7 @@ return result;
 
 
 
-internal static QuaternRec 
+internal static QuaternRec
                     multiplyWithLeftVector3(
                             Vector3.Vect L,
                             QuaternRec R )
@@ -387,7 +387,7 @@ return result;
 
 
 
-internal static Vector3.Vect 
+internal static Vector3.Vect
                     multiplyWithResultVector3(
                        QuaternRec L,
                        QuaternRec R )
@@ -438,7 +438,7 @@ internal static QuaternRec rotate(
                    QuaternRec inverseRotationQ,
                    QuaternRec startPoint )
 {
-QuaternRec middlePoint = multiply( 
+QuaternRec middlePoint = multiply(
                startPoint, inverseRotationQ );
 QuaternRec result = multiply( rotationQ,
                               middlePoint );
@@ -469,11 +469,11 @@ internal static Vector3.Vect rotateVector3(
 // arrow in his bow.  That opposite point
 // of view is a counter-clockwise rotation.
 
-QuaternRec middlePoint = 
+QuaternRec middlePoint =
                  multiplyWithLeftVector3(
-                      startPoint, 
+                      startPoint,
                       inverseRotationQ );
-Vector3.Vect result = 
+Vector3.Vect result =
              multiplyWithResultVector3(
                       rotationQ, middlePoint );
 return result;
@@ -482,18 +482,18 @@ return result;
 
 
 
-internal static Vector3.Vect 
+internal static Vector3.Vect
                 rotationWithSetupDegrees(
                       double angleDegrees,
                       QuaternRec axis,
                       Vector3.Vect inVector )
 {
-double angle = MathF.degreesToRadians( 
+double angle = MathF.degreesToRadians(
                              angleDegrees );
 
-QuaternRec rotationQ = setAsRotation( 
+QuaternRec rotationQ = setAsRotation(
                               axis, angle );
-QuaternRec inverseRotationQ = 
+QuaternRec inverseRotationQ =
                        inverse( rotationQ );
 
 Vector3.Vect resultPoint = rotateVector3(

@@ -95,45 +95,45 @@ return Deg * RadConstant;
 
 
 
-internal static double DegreesToRadians(
-                             double Degrees )
+internal static double degreesToRadians(
+                             double degrees )
 {
 double RadConstant = (2.0d *
               3.14159265358979323846d) / 360.0d;
-return Degrees * RadConstant;
+return degrees * RadConstant;
 }
 
 
 
 
-internal static double RadiansToDegrees(
-                                double Radians )
+internal static double radiansToDegrees(
+                                double radians )
 {
 double RadConstant = 360.0d /
            (2.0d * 3.14159265358979323846d);
-return Radians * RadConstant;
+return radians * RadConstant;
 }
 
 
 
-internal static double RightAscensionToRadians(
-                             double Hours,
-                             double Minutes,
-                             double Seconds )
+internal static double rightAscensionToRadians(
+                             double hours,
+                             double minutes,
+                             double seconds )
 {
 // Hours, minutes and seconds, with 24
 // hours being 360 degrees.
 
-double TotalHours = Hours +
-                (Minutes / 60.0d) + (Seconds /
+double totalHours = hours +
+                (minutes / 60.0d) + (seconds /
                 (60.0d * 60.0d));
-double Degrees = TotalHours * (360.0d / 24.0d);
-// If TotalHours was 24 then it would be
+double degrees = totalHours * (360.0d / 24.0d);
+// If totalHours was 24 then it would be
 // 24 * (360 / 24) = 360
-// If TotalHours was 12 then it would be
+// If totalHours was 12 then it would be
 // 12 * (360 / 24) = 180
 
-return DegreesToRadians( Degrees );
+return degreesToRadians( degrees );
 }
 
 

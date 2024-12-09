@@ -20,6 +20,7 @@ using System;
 // namespace
 
 
+
 static class Vector3
 {
 
@@ -124,7 +125,7 @@ return result;
 
 
 internal static Vect multiplyWithScalar(
-                  Vector inV, double scalar )
+                  Vect inV, double scalar )
 {
 Vect result;
 result.X = inV.X * scalar;
