@@ -1,4 +1,4 @@
-// Copyright Eric Chauvin 2018 - 2024.
+// Copyright Eric Chauvin 2018 - 2025.
 
 
 
@@ -34,10 +34,10 @@ static class Quatern
 
 public struct QuaternRec
 {
-public double X;
-public double Y;
-public double Z;
-public double W;
+public double x;
+public double y;
+public double z;
+public double w;
 }
 
 
@@ -46,10 +46,10 @@ public double W;
 internal static QuaternRec setOne()
 {
 QuaternRec result;
-result.X = 0;
-result.Y = 0;
-result.Z = 0;
-result.W = 1;
+result.x = 0;
+result.y = 0;
+result.z = 0;
+result.w = 1;
 return result;
 }
 
@@ -58,10 +58,10 @@ return result;
 internal static QuaternRec setZero()
 {
 QuaternRec result;
-result.X = 0;
-result.Y = 0;
-result.Z = 0;
-result.W = 0;
+result.x = 0;
+result.y = 0;
+result.z = 0;
+result.w = 0;
 return result;
 }
 
@@ -70,10 +70,10 @@ return result;
 internal static QuaternRec negate(
                            QuaternRec result )
 {
-result.X = -result.X;
-result.Y = -result.Y;
-result.Z = -result.Z;
-result.W = -result.W;
+result.x = -result.x;
+result.y = -result.y;
+result.z = -result.z;
+result.w = -result.w;
 return result;
 }
 
@@ -83,10 +83,10 @@ return result;
 internal static QuaternRec add(
           QuaternRec result, QuaternRec inQ )
 {
-result.X += inQ.X;
-result.Y += inQ.Y;
-result.Z += inQ.Z;
-result.W += inQ.W;
+result.x += inQ.x;
+result.y += inQ.y;
+result.z += inQ.z;
+result.w += inQ.w;
 return result;
 }
 
@@ -95,10 +95,10 @@ return result;
 internal static double normSquared(
                            QuaternRec inQ )
 {
-double ns = (inQ.X * inQ.X) +
-            (inQ.Y * inQ.Y) +
-            (inQ.Z * inQ.Z) +
-            (inQ.W * inQ.W);
+double ns = (inQ.x * inQ.x) +
+            (inQ.y * inQ.y) +
+            (inQ.z * inQ.z) +
+            (inQ.w * inQ.w);
 
 return ns;
 }
@@ -123,10 +123,10 @@ if( length < 0.0000000000000001d )
 double inverse = 1.0d / length;
 
 QuaternRec result;
-result.X = inQ.X * inverse;
-result.Y = inQ.Y * inverse;
-result.Z = inQ.Z * inverse;
-result.W = inQ.W * inverse;
+result.x = inQ.x * inverse;
+result.y = inQ.y * inverse;
+result.z = inQ.z * inverse;
+result.w = inQ.w * inverse;
 return result;
 }
 
@@ -153,19 +153,19 @@ internal static bool isAlmostEqual(
            QuaternRec left, QuaternRec right,
            double smallNumber )
 {
-if( !doubleIsAlmostEqual( left.X, right.X,
+if( !doubleIsAlmostEqual( left.x, right.x,
                                   smallNumber ))
   return false;
 
-if( !doubleIsAlmostEqual( left.Y, right.Y,
+if( !doubleIsAlmostEqual( left.y, right.y,
                                smallNumber ))
   return false;
 
-if( !doubleIsAlmostEqual( left.Z, right.Z,
+if( !doubleIsAlmostEqual( left.z, right.z,
                                smallNumber ))
   return false;
 
-if( !doubleIsAlmostEqual( left.W, right.W,
+if( !doubleIsAlmostEqual( left.w, right.w,
                                  smallNumber ))
   return false;
 
@@ -178,10 +178,10 @@ internal static QuaternRec conjugate(
                               QuaternRec inQ )
 {
 QuaternRec result;
-result.X = -inQ.X;
-result.Y = -inQ.Y;
-result.Z = -inQ.Z;
-result.W = inQ.W;
+result.x = -inQ.x;
+result.y = -inQ.y;
+result.z = -inQ.z;
+result.w = inQ.w;
 return result;
 }
 
@@ -204,10 +204,10 @@ double inverseNS = 1.0d / nSquared;
 // divided by the norm squared.
 
 QuaternRec result;
-result.X = -inQ.X * inverseNS;
-result.Y = -inQ.Y * inverseNS;
-result.Z = -inQ.Z * inverseNS;
-result.W = inQ.W * inverseNS;
+result.x = -inQ.x * inverseNS;
+result.y = -inQ.y * inverseNS;
+result.z = -inQ.z * inverseNS;
+result.w = inQ.w * inverseNS;
 return result;
 }
 
@@ -241,16 +241,16 @@ internal static QuaternRec crossProduct(
 QuaternRec result;
 
 // W is not used.
-result.W = 0;
+result.w = 0;
 
-result.X = (left.Y * right.Z) -
-           (left.Z * right.Y);
+result.x = (left.y * right.z) -
+           (left.z * right.y);
 
-result.Y = (left.Z * right.X) -
-           (left.X * right.Z);
+result.y = (left.z * right.x) -
+           (left.x * right.z);
 
-result.Z = (left.X * right.Y) -
-           (left.Y * right.X);
+result.z = (left.x * right.y) -
+           (left.y * right.x);
 
 return result;
 }
@@ -343,16 +343,16 @@ internal static QuaternRec multiply(
 QuaternRec result;
 
 // The vector Cross Product part:
-result.X =  (L.X * R.W) +  (L.W * R.X) +
-                  (L.Y * R.Z) + (-L.Z * R.Y);
-result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
-                  (L.Z * R.X) +  (L.W * R.Y);
-result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
-                  (L.Z * R.W) +  (L.W * R.Z);
+result.x =  (L.x * R.w) +  (L.w * R.x) +
+                  (L.y * R.z) + (-L.z * R.y);
+result.y = (-L.x * R.z) +  (L.y * R.w) +
+                  (L.z * R.x) +  (L.w * R.y);
+result.z =  (L.x * R.y) + (-L.y * R.x) +
+                  (L.z * R.w) +  (L.w * R.z);
 
 // Almost the same as the vector Dot Product.
-result.W = (-L.X * R.X) + (-L.Y * R.Y) +
-                 (-L.Z * R.Z) +  (L.W * R.W);
+result.w = (-L.x * R.x) + (-L.y * R.y) +
+                 (-L.z * R.z) +  (L.w * R.w);
 return result;
 }
 
@@ -365,23 +365,23 @@ internal static QuaternRec
 {
 QuaternRec result;
 
-// Result.X =  (L.X * R.W) +  (0 * R.X) +
-//                (L.Y * R.Z) + (-L.Z * R.Y);
-// Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
-//                (L.Z * R.X) +  (0 * R.Y);
-// Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
-//                (L.Z * R.W) +  (0 * R.Z);
-// Result.W = (-L.X * R.X) + (-L.Y * R.Y) +
-//                (-L.Z * R.Z) +  (0 * R.W);
+// Result.X =  (L.x * R.W) +  (0 * R.X) +
+//                (L.y * R.Z) + (-L.z * R.Y);
+// Result.Y = (-L.x * R.Z) +  (L.y * R.W) +
+//                (L.z * R.X) +  (0 * R.Y);
+// Result.Z =  (L.x * R.Y) + (-L.y * R.X) +
+//                (L.z * R.W) +  (0 * R.Z);
+// Result.W = (-L.x * R.X) + (-L.y * R.Y) +
+//                (-L.z * R.Z) +  (0 * R.W);
 
-result.X =  (L.X * R.W) +  (L.Y * R.Z) +
-                             (-L.Z * R.Y);
-result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
-                             (L.Z * R.X);
-result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
-                             (L.Z * R.W);
-result.W = (-L.X * R.X) + (-L.Y * R.Y) +
-                             (-L.Z * R.Z);
+result.x =  (L.x * R.w) +  (L.y * R.z) +
+                             (-L.z * R.y);
+result.y = (-L.x * R.z) +  (L.y * R.w) +
+                             (L.z * R.x);
+result.z =  (L.x * R.y) + (-L.y * R.x) +
+                             (L.z * R.w);
+result.w = (-L.x * R.x) + (-L.y * R.y) +
+                             (-L.z * R.z);
 return result;
 }
 
@@ -393,12 +393,12 @@ internal static Vector3.Vect
                        QuaternRec R )
 {
 Vector3.Vect result;
-result.X =  (L.X * R.W) +  (L.W * R.X) +
-                  (L.Y * R.Z) + (-L.Z * R.Y);
-result.Y = (-L.X * R.Z) +  (L.Y * R.W) +
-                  (L.Z * R.X) +  (L.W * R.Y);
-result.Z =  (L.X * R.Y) + (-L.Y * R.X) +
-                  (L.Z * R.W) +  (L.W * R.Z);
+result.x =  (L.x * R.w) +  (L.w * R.x) +
+                  (L.y * R.z) + (-L.z * R.y);
+result.y = (-L.x * R.z) +  (L.y * R.w) +
+                  (L.z * R.x) +  (L.w * R.y);
+result.z =  (L.x * R.y) + (-L.y * R.x) +
+                  (L.z * R.w) +  (L.w * R.z);
 
 // It doesn't need this calculation:
 // result.W = (-L.X * R.X) + (-L.Y * R.Y) +
@@ -414,7 +414,7 @@ internal static QuaternRec setAsRotation(
                           double angle )
 {
 // Make sure it's a unit quaternion.
-axis.W = 0;
+axis.w = 0;
 axis = normalize( axis );
 
 // If Angle was Pi / 2 then this would be
@@ -424,10 +424,10 @@ double sineHalfAngle = Math.Sin( halfAngle );
 double cosineHalfAngle = Math.Cos( halfAngle );
 
 QuaternRec result;
-result.X = axis.X * sineHalfAngle;
-result.Y = axis.Y * sineHalfAngle;
-result.Z = axis.Z * sineHalfAngle;
-result.W = cosineHalfAngle;
+result.x = axis.x * sineHalfAngle;
+result.y = axis.y * sineHalfAngle;
+result.z = axis.z * sineHalfAngle;
+result.w = cosineHalfAngle;
 return result;
 }
 

@@ -1,4 +1,4 @@
-// Copyright Eric Chauvin 2018 - 2024.
+// Copyright Eric Chauvin 2018 - 2025.
 
 
 
@@ -17,19 +17,20 @@
 using System;
 
 
+
 // namespace
 
 
 
-static class Vector3
+public static class Vector3
 {
 
 
 public struct Vect
 {
-public double X;
-public double Y;
-public double Z;
+public double x;
+public double y;
+public double z;
 }
 
 
@@ -37,9 +38,9 @@ public double Z;
 internal static Vect makeZero()
 {
 Vect result;
-result.X = 0;
-result.Y = 0;
-result.Z = 0;
+result.x = 0;
+result.y = 0;
+result.z = 0;
 
 return result;
 }
@@ -47,9 +48,9 @@ return result;
 
 internal static Vect negate( Vect inV )
 {
-inV.X = -inV.X;
-inV.Y = -inV.Y;
-inV.Z = -inV.Z;
+inV.x = -inV.x;
+inV.y = -inV.y;
+inV.z = -inV.z;
 
 return inV;
 }
@@ -60,9 +61,9 @@ internal static Vect add( Vect left,
                           Vect right )
 {
 Vect result;
-result.X = left.X + right.X;
-result.Y = left.Y + right.Y;
-result.Z = left.Z + right.Z;
+result.x = left.x + right.x;
+result.y = left.y + right.y;
+result.z = left.z + right.z;
 return result;
 }
 
@@ -73,9 +74,9 @@ internal static Vect subtract( Vect left,
 {
 Vect result;
 
-result.X = left.X - right.X;
-result.Y = left.Y - right.Y;
-result.Z = left.Z - right.Z;
+result.x = left.x - right.x;
+result.y = left.y - right.y;
+result.z = left.z - right.z;
 return result;
 }
 
@@ -83,9 +84,9 @@ return result;
 
 internal static double normSquared( Vect inV )
 {
-double ns = (inV.X * inV.X) +
-            (inV.Y * inV.Y) +
-            (inV.Z * inV.Z);
+double ns = (inV.x * inV.x) +
+            (inV.y * inV.y) +
+            (inV.z * inV.z);
 
 return ns;
 }
@@ -102,9 +103,9 @@ return Math.Sqrt( nSquared );
 
 internal static Vect normalize( Vect inV )
 {
-double length = (inV.X * inV.X) +
-                (inV.Y * inV.Y) +
-                (inV.Z * inV.Z);
+double length = (inV.x * inV.x) +
+                (inV.y * inV.y) +
+                (inV.z * inV.z);
 
 length = Math.Sqrt( length );
 
@@ -116,9 +117,9 @@ if( length < smallNumber )
 double inverse = 1.0d / length;
 
 Vect result;
-result.X = inV.X * inverse;
-result.Y = inV.Y * inverse;
-result.Z = inV.Z * inverse;
+result.x = inV.x * inverse;
+result.y = inV.y * inverse;
+result.z = inV.z * inverse;
 return result;
 }
 
@@ -128,9 +129,9 @@ internal static Vect multiplyWithScalar(
                   Vect inV, double scalar )
 {
 Vect result;
-result.X = inV.X * scalar;
-result.Y = inV.Y * scalar;
-result.Z = inV.Z * scalar;
+result.x = inV.x * scalar;
+result.y = inV.y * scalar;
+result.z = inV.z * scalar;
 return result;
 }
 
@@ -139,14 +140,17 @@ return result;
 internal static double dotProduct(
                       Vect left, Vect right )
 {
-double dot = (left.X * right.X) +
-             (left.Y * right.Y) +
-             (left.Z * right.Z);
+double dot = (left.x * right.x) +
+             (left.y * right.y) +
+             (left.z * right.z);
 
 return dot;
 }
 
 
+/*
+Make the third side of the triangle?
+Is that what this is?
 
 internal static Vect makePerpendicular(
                             Vect A, Vect B )
@@ -178,7 +182,7 @@ result = normalize( result );
 
 return result;
 }
-
+*/
 
 
 internal static Vect crossProduct(
@@ -191,14 +195,14 @@ internal static Vect crossProduct(
 
 Vect result;
 
-result.X = (left.Y * right.Z) -
-           (left.Z * right.Y);
+result.x = (left.y * right.z) -
+           (left.z * right.y);
 
-result.Y = (left.Z * right.X) -
-           (left.X * right.Z);
+result.y = (left.z * right.x) -
+           (left.x * right.z);
 
-result.Z = (left.X * right.Y) -
-           (left.Y * right.X);
+result.z = (left.x * right.y) -
+           (left.y * right.x);
 
 return result;
 }
