@@ -77,7 +77,7 @@ vecArray = new Vector3.Vect[vecArSize];
 
 
 
-internal int getIndex( int row, int column )
+private int getIndex( int row, int column )
 {
 RangeT.test( row, 0, rowSize - 1,
       "MatrixVec3.getIndex() row range." );
@@ -99,21 +99,21 @@ return where;
 
 
 
-internal Vector3.Vect getVal( int where )
+internal Vector3.Vect getVal( int row,
+                              int column )
 {
-RangeT.test( where, 0, vecArSize - 1,
-           "MatrixVec3.getVal() range." );
+int where = getIndex( row, column );
 
 return vecArray[where];
 }
 
 
 
-internal void setVal( int where,
-                     Vector3.Vect vec )
+internal void setVal( int row,
+                      int column,
+                      Vector3.Vect vec )
 {
-RangeT.test( where, 0, vecArSize -  1,
-           "MatrixVec3.setVal() range." );
+int where = getIndex( row, column );
 
 vecArray[where] = vec;
 }
@@ -123,7 +123,7 @@ vecArray[where] = vec;
 internal void makeTestPattern()
 {
 //       rows, cols
-setSize( 2, 3 );
+setSize( 50, 100 );
 
 Vector3.Vect vec;
 
@@ -133,9 +133,8 @@ for( int row = 0; row < rowSize; row++ )
     {
     vec.x = col * 0.1;
     vec.y = row * 0.1;
-    vec.z = col * col * -0.007;
-    int index = getIndex( row, col );
-    setVal( index, vec );
+    vec.z = 0; // col * col * -0.007;
+    setVal( row, col, vec );
     }
   }
 }
@@ -144,13 +143,36 @@ for( int row = 0; row < rowSize; row++ )
 internal void setFromTwoVecs( VectorFlt vec1,
                               VectorFlt vec2 )
 {
-=====
+int columns = vec1.getSize();
+
+if( columns != vec2.getSize())
+  {
+  throw new Exception(
+    "MatrixVec3.setFromTwoVecs column size." );
+  }
+
+setSize( 2, columns );
+
+Vector3.Vect vec;
+
+for( int col = 0; col < columns; col++ )
+  {
+  vec.x = col * 0.1;
+  vec.y = 0; // row * 0.1;
+  vec.z = vec1.getVal( col );
+  setVal( 0, col, vec );
+  }
+
+for( int col = 0; col < columns; col++ )
+  {
+  vec.x = col * 0.1;
+  vec.y = 1.0; // row * 0.1;
+  vec.z = vec2.getVal( col );
+  setVal( 1, col, vec );
+  }
 
 }
 
 
 
 } // Class
-
-
-
