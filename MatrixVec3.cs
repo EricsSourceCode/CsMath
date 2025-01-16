@@ -140,6 +140,8 @@ for( int row = 0; row < rowSize; row++ )
 }
 
 
+
+
 internal void setFromTwoVecs( VectorFlt vec1,
                               VectorFlt vec2 )
 {
@@ -168,6 +170,36 @@ for( int col = 0; col < columns; col++ )
   vec.x = col * 0.1;
   vec.y = 1.0; // row * 0.1;
   vec.z = vec2.getVal( col );
+  setVal( 1, col, vec );
+  }
+
+}
+
+
+
+
+internal void setFromDoubledVec( VectorFlt vec1 )
+{
+int columns = vec1.getSize();
+
+setSize( 2, columns );
+
+Vector3.Vect vec;
+
+for( int col = 0; col < columns; col++ )
+  {
+  vec.x = col * 0.1;
+  vec.y = 0; // row * 0.1;
+  vec.z = vec1.getVal( col );
+  setVal( 0, col, vec );
+  }
+
+for( int col = 0; col < columns; col++ )
+  {
+  vec.x = col * 0.1;
+  vec.y = 1.0; // row * 0.1;
+  // Repeat the same vector here.
+  vec.z = vec1.getVal( col );
   setVal( 1, col, vec );
   }
 
