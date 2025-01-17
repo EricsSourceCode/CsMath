@@ -207,4 +207,34 @@ for( int col = 0; col < columns; col++ )
 
 
 
+
+internal void setFromVecArray(
+                          VectorArray vecAr )
+{
+int columns = vecAr.getColumns();
+int rows = vecAr.getLastAppend();
+
+setSize( rows, columns );
+
+Vector3.Vect vec;
+
+VectorFlt vecToGet = new VectorFlt( mData );
+
+for( int row = 0; row < rows; row++ )
+  {
+  vecAr.copyVecAt( vecToGet, row );
+
+  for( int col = 0; col < columns; col++ )
+    {
+    vec.x = col * 0.1;
+    vec.y = row * 0.1;
+    vec.z = vecToGet.getVal( col );
+    setVal( row, col, vec );
+    }
+  }
+}
+
+
+
+
 } // Class

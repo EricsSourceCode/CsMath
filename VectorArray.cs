@@ -1,4 +1,4 @@
-// Copyright Eric Chauvin 2024.
+// Copyright Eric Chauvin 2024 - 2025.
 
 
 
@@ -9,8 +9,6 @@
 // https://www.gnu.org/licenses/gpl-3.0.html
 
 
-
-// See MatrixFlt.cs too.
 
 
 using System;
